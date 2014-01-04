@@ -1,0 +1,305 @@
+/**
+ * Typecsset
+ *
+ * Typecsset is a small, unopinionated library for creating beautifully set type
+ * on the web. Typecsset gives perfect vertical rhythm at any configurable font
+ * size, as well as many other typographical niceties.
+ */
+
+
+
+
+
+//------------------------------------\\
+    // SETTINGS
+//------------------------------------\\
+// Typecsset needs some variables setting before it can get started. Some of
+// these variables can be overriden by developers, other need to remain
+// untouched because Typecsset will assign them automatically based on what
+// you’ve told it.
+
+// What would you like your base font-size to be? Define in pixels; the library
+// will convert measurements to the most appropriate units (rems or unitless).
+$base-font-size:        16px !default;
+$base-line-height:      24px !default;
+
+// Would you like indented (rather than spaced) paragraph delimiting?
+$indented-paragraphs:   false !default;
+
+// Would you like to show a baseline grid? This is handy during development.
+$show-baseline:         true !default;
+
+// Do not modify these variables; they are internal settings upon which the
+// library depends.
+$magic-number:          $base-line-height;
+$magic-ratio:           $base-line-height / $base-font-size;
+
+
+
+
+
+//------------------------------------\\
+    // TOOLS
+//------------------------------------\\
+// Typecsset has a number of its own tools which it uses to generate its CSS
+// more efficiently.
+
+// Quickly generate a font-size in rems, with a pixel fallback, based on the
+// value we pass into the mixin, e.g.:
+//
+// h1 {
+//     @include font-size(24px);
+// }
+//
+@mixin font-size($font-size, $line-height: true) {
+    font-size: $font-size;
+    font-size: ($font-size / $base-font-size) * 1rem;
+
+    @if $line-height == true {
+        line-height: ceil($font-size / $base-line-height) * ($base-line-height / $font-size);
+    }
+
+}
+
+// Space elements by an amount based on your magic number. Pass in the property
+// to be indented as a paramater, e.g.:
+//
+// pre {
+//     @include space(padding-left);
+// }
+//
+@mixin space($property) {
+    #{$property}: 2 * $magic-number;
+    #{$property}: 2 * $magic-ratio + rem;
+}
+
+// A small, internally-used function to remove the units from a given value.
+@function strip-units($number) {
+    @return $number / ($number * 0 + 1);
+}
+
+
+
+
+
+/*------------------------------------*\
+    #SHARED
+\*------------------------------------*/
+/**
+ * A lot of elements in Typecsset need to share some declarations (mainly for
+ * vertical rhythm), so we `@extend` some silent classes.
+ */
+%reset {
+    margin:  0;
+    padding: 0;
+}
+
+%vertical-rhythm {
+    @extend %reset;
+    margin-bottom: $magic-number;
+    margin-bottom: $magic-ratio + rem;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #BASE
+\*------------------------------------*/
+/**
+ * 1. Set the base element’s `font-size` to the value of your choosing.
+ * 2. Work out the unitless `line-height` for your project based around your
+ *    desired `line-height` (defined previously in pixels), and your project’s
+ *    base font size.
+ */
+
+@if $show-baseline == true {
+/**
+ * 3. If you have chosen to display a baseline grid, we turn it on here.
+ */
+}
+
+html {
+    font-size: $base-font-size; /* [1] */
+    line-height: $base-line-height / $base-font-size; /* [2] */
+
+    // If you have chosen to display a baseline grid, we turn it on here.
+    @if $show-baseline == true {
+
+        $baseline-size: strip-units($magic-number);
+
+        background-image: url(http://basehold.it/i/#{$baseline-size}); /* [3] */
+    }
+
+}
+
+body {
+    margin: 0;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #HEADINGS
+\*------------------------------------*/
+h1 {
+    @extend %vertical-rhythm;
+    @include font-size(48px);
+}
+
+h2 {
+    @extend %vertical-rhythm;
+    @include font-size(36px);
+}
+
+h3 {
+    @extend %vertical-rhythm;
+    @include font-size(30px);
+}
+
+h4 {
+    @extend %vertical-rhythm;
+    @include font-size(24px);
+}
+
+h5 {
+    @extend %vertical-rhythm;
+    @include font-size(20px);
+}
+
+h6 {
+    @extend %vertical-rhythm;
+    @include font-size(18px);
+}
+
+
+
+
+
+/*------------------------------------*\
+    #LISTS
+\*------------------------------------*/
+ul, ol, dd {
+    @extend %vertical-rhythm;
+    @include space(margin-left);
+}
+
+li > ul,
+li > ol {
+    margin-bottom: 0;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #PARAGRAPHS
+\*------------------------------------*/
+p {
+    @extend %vertical-rhythm;
+
+    @if $indented-paragraphs == true {
+
+        + p {
+            @include space(text-indent);
+            margin-top: -$magic-number;
+        }
+
+    }
+
+}
+
+
+
+
+
+/*------------------------------------*\
+    #CODE
+\*------------------------------------*/
+pre {
+    @extend %vertical-rhythm;
+}
+
+/**
+ * 1. Fix an odd quirk whereby, without this, code blocks are rendered at a
+ *    font-size smaller than 1em.
+ */
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace; /* [1] */
+}
+
+
+
+
+
+/*------------------------------------*\
+    #QUOTES
+\*------------------------------------*/
+/**
+ * 1. Hang the opening quote of the blockquote.
+ */
+blockquote {
+    text-indent: -0.4em; /* [1] */
+}
+
+/**
+ * Set up quote marks on quoting elements. This is very English-based, so we are
+ * using “, ”, ‘, and ’ quotes.
+ */
+blockquote {
+    @extend %vertical-rhythm;
+    quotes: "“" "”";
+    @include space(margin-left);
+
+    p {
+
+        &:before {
+            content: "“";
+            content: open-quote;
+        }
+
+        &:after {
+            content: "";
+            content: no-close-quote;
+        }
+
+        &:last-of-type:after {
+            content: "”";
+            content: close-quote;
+        }
+
+    }
+
+}
+
+q   {
+    quotes: "‘" "’" "“" "”";
+
+    &:before {
+        content: "‘";
+        content: open-quote;
+    }
+
+    &:after {
+        content: "’";
+        content: close-quote;
+    }
+
+    q:before {
+        content: "“";
+        content: open-quote;
+    }
+
+    q:after{
+        content: "”";
+        content: close-quote;
+    }
+
+}
