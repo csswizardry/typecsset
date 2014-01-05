@@ -1,6 +1,7 @@
 # Typecsset
 
-**Typecsset is a small Sass library for setting beautiful type on the web.**
+**<cite>Typecsset</cite> (type·set, /ˈtīpˌset/) is a small Sass library for
+setting type on the web.**
 
 * Consistent, automagic vertical rhythm.
 * Proper quotes.
