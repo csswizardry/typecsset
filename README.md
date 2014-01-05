@@ -3,6 +3,10 @@
 **<cite>Typecsset</cite> (type·set, /ˈtīpˌset/) is a small Sass library for
 setting type on the web.**
 
+It gives you an automatic, pixel-perfect, baseline grid across all textual HTML
+elements based entirely on just a few settings of your choice. Baseline grids
+without the headaches.
+
 ## Implementation
 
 Using Typecsset couldn’t be easier. Download the Sass file, predefine any
