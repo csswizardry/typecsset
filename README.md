@@ -8,14 +8,16 @@ setting type on the web.**
 Using Typecsset couldn’t be easier. Download the Sass file, predefine any
 settings, `@import` it into your project, _go!_
 
-    $typecsset-base-font-size:      18px;
-    $typecsset-base-line-height:    27px;
+```scss
+$typecsset-base-font-size:      18px;
+$typecsset-base-line-height:    27px;
 
-    [Your own CSS]
+[Your own CSS]
 
-    @import "path/to/typecsset";
+@import "path/to/typecsset";
 
-    [More of your own CSS]
+[More of your own CSS]
+```
 
 ### Precision
 
@@ -97,22 +99,25 @@ your vertical rhythm. Clever stuff!
 
 **Input:**
 
-    $typecsset-base-font-size:      16px;
-    $typecsset-base-line-height:    24px;
+```scss
+$typecsset-base-font-size:      16px;
+$typecsset-base-line-height:    24px;
 
-    [...]
+[...]
 
-    .foo {
-        @include typecsset-font-size(20px);
-    }
+.foo {
+    @include typecsset-font-size(20px);
+}
+```
 
 **Output:**
-
-    .foo {
-        font-size: 20px;
-        font-size: 1.25rem;
-        line-height: 1.2;
-    }
+```css
+.foo {
+    font-size: 20px;
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+```
 
 * `font-size: 20px;`: A pixel fallback simply lifted straight from the input
   into the mixin.
@@ -131,18 +136,22 @@ property, e.g. `padding`:
 
 **Input:**
 
-    $typecsset-base-line-height:    24px;
+```scss
+$typecsset-base-line-height:    24px;
 
-    .foo {
-        @include typecsset-space(margin-bottom);
-    }
+.foo {
+    @include typecsset-space(margin-bottom);
+}
+```
 
 **Input:**
 
-    .foo {
-        margin-bottom: 48px;
-        margin-bottom: 3rem;
-    }
+```css
+.foo {
+    margin-bottom: 48px;
+    margin-bottom: 3rem;
+}
+```
 
 This simple-looking mixin just DRYs out some repeated Typecsset functionality.
 
@@ -153,22 +162,28 @@ units from a value that is passed into it:
 
 **Input:**
 
-    .foo {
-        line-height: typecsset-strip-units(1.5px);
-    }
+```scss
+.foo {
+    line-height: typecsset-strip-units(1.5px);
+}
+```
 
 **Output:**
 
-    .foo {
-        line-height: 1.5;
-    }
+```css
+.foo {
+    line-height: 1.5;
+}
+```
 
 This very useful function only gets used once—to get us our baseline grid image:
 
-    [...]
+```scss
+[...]
 
-    $typecsset-baseline-size: typecsset-strip-units($typecsset-magic-number);
+$typecsset-baseline-size: typecsset-strip-units($typecsset-magic-number);
 
-    background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] */
+background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] */
 
-    [...]
+[...]
+```
