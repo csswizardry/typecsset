@@ -17,6 +17,16 @@ settings, `@import` it into your project, _go!_
 
     [More of your own CSS]
 
+### Precision
+
+Due to the nature of unitless and relative values, you will end up with a lot of
+floats as opposed to integers (e.g. `line-height: 1.333;` instead of
+`line-height: 24px;`). In order to ensure that browsers can work these values
+out as closely as possible to the pixel, thus avoiding rounding errors, I
+recommend compiling your Sass with the `--precision` flag set to `7`, e.g.:
+
+    sass --watch typecsset.scss:typecsset.css --style expanded --precision 7
+
 ## Settings
 
 All Typecsset’s settings are stored in namespaced variables (e.g.
