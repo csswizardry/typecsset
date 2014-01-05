@@ -1,4 +1,4 @@
-# Typecsset (v0.1.1)
+# Typecsset (v0.1.2)
 
 **<cite>Typecsset</cite> (type·set, /ˈtīpˌset/) is a small Sass library for
 setting type on the web.**
@@ -144,7 +144,7 @@ $typecsset-base-line-height:    24px;
 }
 ```
 
-**Input:**
+**Output:**
 
 ```css
 .foo {
