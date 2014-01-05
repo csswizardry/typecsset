@@ -56,10 +56,10 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
 // value we pass into the mixin, e.g.:
 //
 // h1 {
-//     @include font-size(24px);
+//     @include typecsset-font-size(24px);
 // }
 //
-@mixin font-size($font-size, $line-height: true) {
+@mixin typecsset-font-size($font-size, $line-height: true) {
     font-size: $font-size;
     font-size: ($font-size / $typecsset-base-font-size) * 1rem;
 
@@ -73,16 +73,16 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
 // to be indented as a paramater, e.g.:
 //
 // pre {
-//     @include space(padding-left);
+//     @include typecsset-space(padding-left);
 // }
 //
-@mixin space($property) {
+@mixin typecsset-space($property) {
     #{$property}: 2 * $typecsset-magic-number;
     #{$property}: 2 * $typecsset-magic-ratio + rem;
 }
 
 // A small, internally-used function to remove the units from a given value.
-@function strip-units($number) {
+@function typecsset-strip-units($number) {
     @return $number / ($number * 0 + 1);
 }
 
@@ -97,13 +97,13 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
  * A lot of elements in Typecsset need to share some declarations (mainly for
  * vertical rhythm), so we `@extend` some silent classes.
  */
-%reset {
+%typecsset-reset {
     margin:  0;
     padding: 0;
 }
 
-%vertical-rhythm {
-    @extend %reset;
+%typecsset-vertical-rhythm {
+    @extend %typecsset-reset;
     margin-bottom: $typecsset-magic-number;
     margin-bottom: $typecsset-magic-ratio + rem;
 }
@@ -135,7 +135,7 @@ html {
     // If you have chosen to display a baseline grid, we turn it on here.
     @if $typecsset-show-baseline == true {
 
-        $typecsset-baseline-size: strip-units($typecsset-magic-number);
+        $typecsset-baseline-size: typecsset-strip-units($typecsset-magic-number);
 
         background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] */
     }
@@ -154,33 +154,33 @@ body {
     #HEADINGS
 \*------------------------------------*/
 h1 {
-    @extend %vertical-rhythm;
-    @include font-size($typecsset-h1-size);
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h1-size);
 }
 
 h2 {
-    @extend %vertical-rhythm;
-    @include font-size($typecsset-h2-size);
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h2-size);
 }
 
 h3 {
-    @extend %vertical-rhythm;
-    @include font-size($typecsset-h3-size);
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h3-size);
 }
 
 h4 {
-    @extend %vertical-rhythm;
-    @include font-size($typecsset-h4-size);
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h4-size);
 }
 
 h5 {
-    @extend %vertical-rhythm;
-    @include font-size($typecsset-h5-size);
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h5-size);
 }
 
 h6 {
-    @extend %vertical-rhythm;
-    @include font-size($typecsset-h6-size);
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h6-size);
 }
 
 
@@ -191,8 +191,8 @@ h6 {
     #LISTS
 \*------------------------------------*/
 ul, ol, dd {
-    @extend %vertical-rhythm;
-    @include space(margin-left);
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-space(margin-left);
 }
 
 li > ul,
@@ -208,12 +208,12 @@ li > ol {
     #PARAGRAPHS
 \*------------------------------------*/
 p {
-    @extend %vertical-rhythm;
+    @extend %typecsset-vertical-rhythm;
 
     @if $typecsset-indented-paragraphs == true {
 
         + p {
-            @include space(text-indent);
+            @include typecsset-space(text-indent);
             margin-top: -$typecsset-magic-number;
             margin-top: -$typecsset-magic-ratio + rem;
         }
@@ -230,7 +230,7 @@ p {
     #CODE
 \*------------------------------------*/
 pre {
-    @extend %vertical-rhythm;
+    @extend %typecsset-vertical-rhythm;
 }
 
 /**
@@ -263,9 +263,9 @@ blockquote {
  * using “, ”, ‘, and ’ quotes.
  */
 blockquote {
-    @extend %vertical-rhythm;
+    @extend %typecsset-vertical-rhythm;
     quotes: "“" "”";
-    @include space(margin-left);
+    @include typecsset-space(margin-left);
 
     p {
 
