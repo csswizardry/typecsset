@@ -20,19 +20,27 @@
 
 // What would you like your base font-size to be? Define in pixels; the library
 // will convert measurements to the most appropriate units (rems or unitless).
-$base-font-size:        16px !default;
-$base-line-height:      24px !default;
+$typecsset-base-font-size:      16px !default;
+$typecsset-base-line-height:    24px !default;
+
+// Heading sizes
+$typecsset-h1-size:             48px !default;
+$typecsset-h2-size:             36px !default;
+$typecsset-h3-size:             30px !default;
+$typecsset-h4-size:             24px !default;
+$typecsset-h5-size:             20px !default;
+$typecsset-h6-size:             18px !default;
 
 // Would you like indented (rather than spaced) paragraph delimiting?
-$indented-paragraphs:   false !default;
+$typecsset-indented-paragraphs: false !default;
 
 // Would you like to show a baseline grid? This is handy during development.
-$show-baseline:         true !default;
+$typecsset-show-baseline:       true !default;
 
 // Do not modify these variables; they are internal settings upon which the
 // library depends.
-$magic-number:          $base-line-height;
-$magic-ratio:           $base-line-height / $base-font-size;
+$typecsset-magic-number:        $typecsset-base-line-height;
+$typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-font-size;
 
 
 
@@ -53,10 +61,10 @@ $magic-ratio:           $base-line-height / $base-font-size;
 //
 @mixin font-size($font-size, $line-height: true) {
     font-size: $font-size;
-    font-size: ($font-size / $base-font-size) * 1rem;
+    font-size: ($font-size / $typecsset-base-font-size) * 1rem;
 
     @if $line-height == true {
-        line-height: ceil($font-size / $base-line-height) * ($base-line-height / $font-size);
+        line-height: ceil($font-size / $typecsset-base-line-height) * ($typecsset-base-line-height / $font-size);
     }
 
 }
@@ -69,8 +77,8 @@ $magic-ratio:           $base-line-height / $base-font-size;
 // }
 //
 @mixin space($property) {
-    #{$property}: 2 * $magic-number;
-    #{$property}: 2 * $magic-ratio + rem;
+    #{$property}: 2 * $typecsset-magic-number;
+    #{$property}: 2 * $typecsset-magic-ratio + rem;
 }
 
 // A small, internally-used function to remove the units from a given value.
@@ -96,8 +104,8 @@ $magic-ratio:           $base-line-height / $base-font-size;
 
 %vertical-rhythm {
     @extend %reset;
-    margin-bottom: $magic-number;
-    margin-bottom: $magic-ratio + rem;
+    margin-bottom: $typecsset-magic-number;
+    margin-bottom: $typecsset-magic-ratio + rem;
 }
 
 
@@ -114,22 +122,22 @@ $magic-ratio:           $base-line-height / $base-font-size;
  *    base font size.
  */
 
-@if $show-baseline == true {
+@if $typecsset-show-baseline == true {
 /**
  * 3. If you have chosen to display a baseline grid, we turn it on here.
  */
 }
 
 html {
-    font-size: $base-font-size; /* [1] */
-    line-height: $base-line-height / $base-font-size; /* [2] */
+    font-size: $typecsset-base-font-size; /* [1] */
+    line-height: $typecsset-base-line-height / $typecsset-base-font-size; /* [2] */
 
     // If you have chosen to display a baseline grid, we turn it on here.
-    @if $show-baseline == true {
+    @if $typecsset-show-baseline == true {
 
-        $baseline-size: strip-units($magic-number);
+        $typecsset-baseline-size: strip-units($typecsset-magic-number);
 
-        background-image: url(http://basehold.it/i/#{$baseline-size}); /* [3] */
+        background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] */
     }
 
 }
@@ -147,32 +155,32 @@ body {
 \*------------------------------------*/
 h1 {
     @extend %vertical-rhythm;
-    @include font-size(48px);
+    @include font-size($typecsset-h1-size);
 }
 
 h2 {
     @extend %vertical-rhythm;
-    @include font-size(36px);
+    @include font-size($typecsset-h2-size);
 }
 
 h3 {
     @extend %vertical-rhythm;
-    @include font-size(30px);
+    @include font-size($typecsset-h3-size);
 }
 
 h4 {
     @extend %vertical-rhythm;
-    @include font-size(24px);
+    @include font-size($typecsset-h4-size);
 }
 
 h5 {
     @extend %vertical-rhythm;
-    @include font-size(20px);
+    @include font-size($typecsset-h5-size);
 }
 
 h6 {
     @extend %vertical-rhythm;
-    @include font-size(18px);
+    @include font-size($typecsset-h6-size);
 }
 
 
@@ -202,11 +210,12 @@ li > ol {
 p {
     @extend %vertical-rhythm;
 
-    @if $indented-paragraphs == true {
+    @if $typecsset-indented-paragraphs == true {
 
         + p {
             @include space(text-indent);
-            margin-top: -$magic-number;
+            margin-top: -$typecsset-magic-number;
+            margin-top: -$typecsset-magic-ratio + rem;
         }
 
     }
