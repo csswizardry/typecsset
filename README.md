@@ -75,3 +75,92 @@ define the `margin`s and `line-height`s for all typographical elements.
 
 This is another library variable, and simply holds your magic number as a ratio
 of your chosen base font size.
+
+## Tools
+
+Typecsset has a number of mixins and functions which are used to generate more
+verbose CSS around your own settings.
+
+### `typecsset-font-size()`
+
+This mixin takes a pixel value for a font size and converts it into a
+rem-with-pixel-fallback `font-size`, with a unitless `line-height` based upon
+your vertical rhythm. Clever stuff!
+
+**Input:**
+
+    $typecsset-base-font-size:      16px;
+    $typecsset-base-line-height:    24px;
+
+    [...]
+
+    .foo {
+        @include typecsset-font-size(20px);
+    }
+
+**Output:**
+
+    .foo {
+        font-size: 20px;
+        font-size: 1.25rem;
+        line-height: 1.2;
+    }
+
+* `font-size: 20px;`: A pixel fallback simply lifted straight from the input
+  into the mixin.
+* `font-size: 1.25rem;` A rem-based font-size for supporting browsers. This is
+  calculated by _desired font-size_ / _base font-size_ = _font-size in rems_.
+  20 / 16 = 1.25.
+* `line-height: 1.2;`: This is a unitless value greater than 1 which, when
+  multiplied by the element’s font-size, yields a number that is a multiple of
+  your base line-height. It is this which keeps everything on your baseline.
+  1.2 * 20 = 24px.
+
+### `typecsset-space()`
+
+The `typecsset-space()` mixin simply drops a double amount of ‘spacing’ onto a given
+property, e.g. `padding`:
+
+**Input:**
+
+    $typecsset-base-line-height:    24px;
+
+    .foo {
+        @include typecsset-space(margin-bottom);
+    }
+
+**Input:**
+
+    .foo {
+        margin-bottom: 48px;
+        margin-bottom: 3rem;
+    }
+
+This simple-looking mixin just DRYs out some repeated Typecsset functionality.
+
+### `typecsset-strip-units()`
+
+The `typecsset-strip-units()` function simply does as it says: it removes the
+units from a value that is passed into it:
+
+**Input:**
+
+    .foo {
+        line-height: typecsset-strip-units(1.5px);
+    }
+
+**Output:**
+
+    .foo {
+        line-height: 1.5;
+    }
+
+This very useful function only gets used once—to get us our baseline grid image:
+
+    [...]
+
+    $typecsset-baseline-size: typecsset-strip-units($typecsset-magic-number);
+
+    background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] */
+
+    [...]
