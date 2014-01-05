@@ -222,6 +222,13 @@ p {
 
 }
 
+/**
+ * Not strictly a paragraph, but probably doesn’t need its own section.
+ */
+address {
+    @extend %typecsset-vertical-rhythm;
+}
+
 
 
 
