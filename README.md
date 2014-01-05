@@ -3,9 +3,6 @@
 **<cite>Typecsset</cite> (type·set, /ˈtīpˌset/) is a small Sass library for
 setting type on the web.**
 
-* Consistent, automagic vertical rhythm.
-* Proper quotes.
-
 ## Implementation
 
 Using Typecsset couldn’t be easier. Download the Sass file, predefine any
