@@ -319,3 +319,25 @@ q   {
     }
 
 }
+
+
+
+
+
+/*------------------------------------*\
+    #TABLES
+\*------------------------------------*/
+/**
+ * Crude table styles; tables are very difficult to keep on the baseline.
+ */
+table {
+    @extend %typecsset-vertical-rhythm;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th,
+td {
+    padding: $typecsset-base-line-height / 2;
+}
