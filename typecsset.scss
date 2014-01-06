@@ -116,7 +116,8 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
     #BASE
 \*------------------------------------*/
 /**
- * 1. Set the base element’s `font-size` to the value of your choosing.
+ * 1. Set the base element’s `font-size` to the value of your choosing. Set in
+ *    ems, assuming a browser default of 16px.
  * 2. Work out the unitless `line-height` for your project based around your
  *    desired `line-height` (defined previously in pixels), and your project’s
  *    base font size.
@@ -129,7 +130,7 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
 }
 
 html {
-    font-size: $typecsset-base-font-size; /* [1] */
+    font-size: $typecsset-base-font-size / 16px + em; /* [1] */
     line-height: $typecsset-base-line-height / $typecsset-base-font-size; /* [2] */
 
     // If you have chosen to display a baseline grid, we turn it on here.
