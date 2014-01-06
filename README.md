@@ -7,6 +7,11 @@ It gives you an automatic, pixel-perfect, baseline grid across all textual HTML
 elements based entirely on just a few settings of your choice. Baseline grids
 without the headaches.
 
+## Demo
+
+* [View demo](http://csswizardry.com/typecsset/)
+* [View demo code](https://github.com/csswizardry/typecsset/tree/gh-pages)
+
 ## Implementation
 
 Using Typecsset couldn’t be easier. Download the Sass file, predefine any
