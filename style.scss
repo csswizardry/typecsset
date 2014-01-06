@@ -1,0 +1,10 @@
+$typecsset-base-font-size:      18px;
+$typecsset-base-line-height:    24px;
+$typecsset-show-baseline:       true;
+
+@import "typecsset";
+
+body {
+    font-family: Georgia, serif;
+    padding: $typecsset-magic-number;
+}
