@@ -28,6 +28,8 @@ $typecsset-base-line-height:    27px;
 [More of your own CSS]
 ```
 
+**[Example](https://github.com/csswizardry/typecsset/blob/gh-pages/style.scss)**
+
 ### Precision
 
 Due to the nature of unitless and relative values, you will end up with a lot of
