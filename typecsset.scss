@@ -34,6 +34,18 @@ $typecsset-h6-size:             18px !default;
 // Would you like indented (rather than spaced) paragraph delimiting?
 $typecsset-indented-paragraphs: false !default;
 
+// Would you like to automatically scale your Heading sizes?
+// (This can provide a more elegant typographic rhythm)
+$typecsset-auto-scale:          false !default;
+
+// Set the ratio by which your type should grow.
+// Accepts two numbers, representing a ratio, typically associated with
+// music intervals.
+// Common intervals: Perfect fourth (4,3)[default], Perfect Fifth (3,2),
+// Perfect Octave (2,1), Major Third (5,4), Major Sixth (5,3).
+// The Golden Ratio is (1.618,1).
+$typecsset-ratio:               4,3   !default;
+
 // Would you like to show a baseline grid? This is handy during development.
 $typecsset-show-baseline:       false !default;
 
@@ -41,8 +53,8 @@ $typecsset-show-baseline:       false !default;
 // library depends.
 $typecsset-magic-number:        $typecsset-base-line-height;
 $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-font-size;
-
-
+$typecsset-modular-scale:       nth($typecsset-ratio, 1)/nth($typecsset-ratio, 2);
+$typecsset-headings:            6,5,4,3,2,1;
 
 
 
@@ -86,9 +98,29 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
     @return $number / ($number * 0 + 1);
 }
 
+// Exponent function used for modular scaling of type (removes Compass dependancy)
+@function exponent($base, $exponent){
+      $value: $base;
+      @if $exponent > 1{
+        @for $i from 2 through $exponent{
+          $value: $value * $base;
+        }
+      }
+      @if $exponent < 1{
+        @for $i from 0 through -$exponent{
+          $value: $value / $base;
+        }
+       }
+      @return ($value);
+}
 
+// Modular scale function to scale type up or down. Can be used externally
+// by using modular-scale([scale number]);.
+$stripped-base-font-size: typecsset-strip-units($typecsset-base-font-size);
 
-
+@function modular-scale($i){
+    @return exponent($typecsset-modular-scale, $i)*($stripped-base-font-size)*1px;
+}
 
 /*------------------------------------*\
     #SHARED
@@ -109,9 +141,6 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
 }
 
 
-
-
-
 /*------------------------------------*\
     #BASE
 \*------------------------------------*/
@@ -128,6 +157,8 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
  * 3. If you have chosen to display a baseline grid, we turn it on here.
  */
 }
+
+
 
 html {
     font-size: $typecsset-base-font-size / 16px + em; /* [1] */
@@ -154,6 +185,30 @@ body {
 /*------------------------------------*\
     #HEADINGS
 \*------------------------------------*/
+/**
+ * 1. If you've chosen to automatically scale your type, we set that up here.
+ * 2. Using heading numbers[6-1], we create a loop.
+ * 3. Use the current scale number to exponentially scale up our base-font-size.
+ * 4. Invert the current value of the loop($i) for an more traditionally ordered
+ *    output (h1,h2,h3,h4,h5,h6).
+ * 5. Use our new modular values for input into typecsset mixins to generate our
+ *    desired, modularly-scaled css.
+ */
+
+@if $typecsset-auto-scale == true {                          /* [1] */
+    @each $i in $typecsset-headings{                         /* [2] */
+            $font-size: modular-scale($i);                   /* [3] */
+            $current-heading: nth($typecsset-headings,$i);   /* [4] */
+            h#{$current-heading} {
+                @extend %typecsset-vertical-rhythm;
+                @include typecsset-font-size($font-size);    /* [5] */
+            };
+            $i: $i + 1;
+    };
+
+}
+@else{
+
 h1 {
     @extend %typecsset-vertical-rhythm;
     @include typecsset-font-size($typecsset-h1-size);
@@ -183,7 +238,7 @@ h6 {
     @extend %typecsset-vertical-rhythm;
     @include typecsset-font-size($typecsset-h6-size);
 }
-
+}
 
 
 
