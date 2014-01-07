@@ -319,6 +319,14 @@ q   {
         content: close-quote;
     }
 
+    /**
+     * If an element opens with an inline quote, let’s hang that.
+     */
+    &:first-child {
+        display: inline-block;
+        text-indent: -0.22em;
+    }
+
 }
 
 

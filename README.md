@@ -1,4 +1,4 @@
-# Typecsset (v0.2.1)
+# Typecsset (v0.3.0)
 
 **<cite>Typecsset</cite> (type·set, /ˈtīpˌset/) is a small Sass library for
 setting type on the web.**
