@@ -263,7 +263,7 @@ samp {
  * 1. Hang the opening quote of the blockquote.
  */
 blockquote {
-    text-indent: -0.4em; /* [1] */
+    text-indent: -0.41em; /* [1] */
 }
 
 /**
@@ -317,6 +317,14 @@ q   {
     q:after{
         content: "”";
         content: close-quote;
+    }
+
+    /**
+     * If an element opens with an inline quote, let’s hang that.
+     */
+    &:first-child {
+        display: inline-block;
+        text-indent: -0.22em;
     }
 
 }
