@@ -71,7 +71,15 @@ order to maintain a consistent and harmonious vertical rhythm.
 
 These settings, predictably, contain the desired font sizes for your headings
 one-through-six. Again, they are set in pixels because the library will pick
-them up and convert them into rems later on.
+them up and convert them into rems later on. For automatic settings, see below.
+
+### `$typecsset-auto-scale`
+
+This is a boolean toggle to allow your headings to be automatically scaled based on a modular scale. This is based on the principles outlined by [Tim Brown's aricle, "More Meaningful Typography"](http://alistapart.com/article/more-meaningful-typography).
+
+### `$typecsset-ratio`
+
+If you set '$typecsset-auto-scale' to 'true', you can also set the ratio at which your headings scale. The value of this must be a list of two numbers (typically based on [musical intervals](http://en.wikipedia.org/wiki/Interval_(music))). The default is 4,3 (a perfect fourth). See [Tim's aricle](http://alistapart.com/article/more-meaningful-typography) for some more useful intervals.
 
 ### `$typecsset-indented-paragraphs`
 
