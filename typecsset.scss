@@ -40,7 +40,7 @@ $typecsset-auto-scale:          false !default;
 
 // Set the ratio by which your type should grow.
 // Accepts two numbers, representing a ratio, typically associated with
-// music intervals.
+// music intervals. You may also use floats (1.33).
 // Common intervals: Perfect fourth (4,3)[default], Perfect Fifth (3,2),
 // Perfect Octave (2,1), Major Third (5,4), Major Sixth (5,3).
 // The Golden Ratio is (1.618,1).
@@ -53,9 +53,19 @@ $typecsset-show-baseline:       false !default;
 // library depends.
 $typecsset-magic-number:        $typecsset-base-line-height;
 $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-font-size;
-$typecsset-modular-scale:       nth($typecsset-ratio, 1)/nth($typecsset-ratio, 2);
 $typecsset-headings:            6,5,4,3,2,1;
+$typecsset-modular-scale:       0;
 
+//Checking for floats in $typecsset-ratio
+@if length($typecsset-ratio) == 2{
+    @if nth($typecsset-ratio,1) < nth($typecsset-ratio,2){
+        $typecsset-modular-scale:   nth($typecsset-ratio, 2)/nth($typecsset-ratio, 1);
+    }@else{
+        $typecsset-modular-scale:   nth($typecsset-ratio, 1)/nth($typecsset-ratio, 2);
+    }
+} @else {
+    $typecsset-modular-scale:   $typecsset-ratio;
+}
 
 
 //------------------------------------\\
@@ -114,14 +124,29 @@ $typecsset-headings:            6,5,4,3,2,1;
       @return ($value);
 }
 
-// Modular scale function to scale type up or down. Can be used externally
-// by using modular-scale([scale number]);.
+// Modular scale function to scale type up or down.
+// But first, we need strip base-type-size of its units.
 $stripped-base-font-size: typecsset-strip-units($typecsset-base-font-size);
-
 @function modular-scale($i){
     @return exponent($typecsset-modular-scale, $i)*($stripped-base-font-size)*1px;
 }
 
+// This mixin can be used externally
+// by using @include modular-scale([scale number, property]);.
+@mixin typecsset-scale($i, $property){
+    @if $typecsset-auto-scale == false{
+        @warn "Please set $typecsset-auto-scale to true or else typecsset-scale is fairly meaningless.";
+    }
+    @if $property == "font-size"{
+        $font-size: modular-scale($i);
+        @include typecsset-font-size($font-size);
+    }
+    @else{
+        $m-scale: modular-scale($i);
+        #{$property}: $m-scale;
+        #{$property}: ($m-scale / $typecsset-base-font-size) * 1rem;
+    }
+}
 /*------------------------------------*\
     #SHARED
 \*------------------------------------*/
@@ -185,6 +210,8 @@ body {
 /*------------------------------------*\
     #HEADINGS
 \*------------------------------------*/
+
+@if $typecsset-auto-scale == true {                         /* [1] */
 /**
  * 1. If you've chosen to automatically scale your type, we set that up here.
  * 2. Using heading numbers[6-1], we create a loop.
@@ -194,14 +221,13 @@ body {
  * 5. Use our new modular values for input into typecsset mixins to generate our
  *    desired, modularly-scaled css.
  */
-
-@if $typecsset-auto-scale == true {                          /* [1] */
     @each $i in $typecsset-headings{                         /* [2] */
             $font-size: modular-scale($i);                   /* [3] */
             $current-heading: nth($typecsset-headings,$i);   /* [4] */
+                                                             /* [5] */
             h#{$current-heading} {
                 @extend %typecsset-vertical-rhythm;
-                @include typecsset-font-size($font-size);    /* [5] */
+                @include typecsset-font-size($font-size);
             };
             $i: $i + 1;
     };
