@@ -1,0 +1,19 @@
+{
+  "name": "typecsset",
+  "version": "0.3.0",
+  "homepage": "http://csswizardry.com/typecsset/",
+  "authors": [
+    "Harry Roberts <harry@csswizardry.com>"
+  ],
+  "description": "A small Sass library for setting type on the web.",
+  "main": "typecsset.scss",
+  "keywords": [
+    "Sass",
+    "typeset",
+    "type",
+    "CSS",
+    "vertical",
+    "rhythm"
+  ],
+  "license": "Apache License 2.0"
+}
