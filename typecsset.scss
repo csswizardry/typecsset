@@ -70,15 +70,15 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
 }
 
 // Space elements by an amount based on your magic number. Pass in the property
-// to be indented as a paramater, e.g.:
+// to be indented and the amount (defaults to 2) as parameters, e.g.:
 //
 // pre {
-//     @include typecsset-space(padding-left);
+//     @include typecsset-space(padding-left, 4);
 // }
 //
-@mixin typecsset-space($property) {
-    #{$property}: 2 * $typecsset-magic-number;
-    #{$property}: 2 * $typecsset-magic-ratio + rem;
+@mixin typecsset-space($property, $amount: 2) {
+    #{$property}: $amount * $typecsset-magic-number;
+    #{$property}: $amount * $typecsset-magic-ratio + rem;
 }
 
 // A small, internally-used function to remove the units from a given value.
