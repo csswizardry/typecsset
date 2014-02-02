@@ -70,7 +70,7 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
 }
 
 // Space elements by an amount based on your magic number. Pass in the property
-// to be indented as a paramater, e.g.:
+// to be indented as a parameter, e.g.:
 //
 // pre {
 //     @include typecsset-space(padding-left);
