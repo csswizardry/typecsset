@@ -142,8 +142,7 @@ $typecsset-base-line-height:    24px;
 
 ### `typecsset-space()`
 
-The `typecsset-space()` mixin simply drops a double amount of ‘spacing’ onto a given
-property, e.g. `padding`:
+The `typecsset-space()` mixin simply drops a given amount of ‘spacing’ based on your magic number (defaults to 2) onto a given property, e.g. `margin-bottom`:
 
 **Input:**
 
@@ -151,7 +150,9 @@ property, e.g. `padding`:
 $typecsset-base-line-height:    24px;
 
 .foo {
-    @include typecsset-space(margin-bottom);
+    @include typecsset-space(margin-bottom, 4);
+    @include typecsset-space(margin-left, 1/2);
+    @include typecsset-space(padding);
 }
 ```
 
@@ -159,8 +160,12 @@ $typecsset-base-line-height:    24px;
 
 ```css
 .foo {
-    margin-bottom: 48px;
-    margin-bottom: 3rem;
+    margin-bottom: 96px;
+    margin-bottom: 6rem;
+    margin-left: 12px;
+    margin-left: 0.75rem;
+    padding: 48px;
+    padding: 3rem;
 }
 ```
 
