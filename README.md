@@ -63,15 +63,25 @@ This is the base line height you would like your project to take. Again, define
 this in pixels: Typecsset will convert it into a unitless value for you.
 
 This `$typecsset-base-line-height` value is the most important one in the whole
-library—it defines and underpins your whole vertical rhythm. Everything
+library - it defines and underpins your whole vertical rhythm. Everything
 (`margins`, `line-height`s, etc.) will be based upon units of this number in
 order to maintain a consistent and harmonious vertical rhythm.
 
-### `$typecsset-h[1–6]-size`
+### `$typecsset-h[1-6]-size`
 
 These settings, predictably, contain the desired font sizes for your headings
 one-through-six. Again, they are set in pixels because the library will pick
-them up and convert them into rems later on.
+them up and convert them into rems later on. *For automatic settings, see below.*
+
+### `$typecsset-auto-scale`
+
+This is a boolean toggle to allow your headings to be automatically scaled based on a modular scale. This is based on the principles outlined by [Tim Brown's aricle, "More Meaningful Typography"](http://alistapart.com/article/more-meaningful-typography).
+
+### `$typecsset-ratio`
+
+If you set `$typecsset-auto-scale = true`, you can also set the ratio at which your headings scale. The value of this can either be a list of two numbers (typically based on [musical intervals](http://en.wikipedia.org/wiki/Interval_(music\)) ) or a float(1.33). The default is 4,3 (a perfect fourth). See [Tim's aricle](http://alistapart.com/article/more-meaningful-typography) for some more useful intervals.
+
+*Note: 3,4 and 4,3 would result in the same scale. This is because Musical intervals are sometimes written in either order and a sub 1 scale would be fairly useless.*
 
 ### `$typecsset-indented-paragraphs`
 
@@ -198,3 +208,35 @@ background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] 
 
 [...]
 ```
+
+### `typecsset-scale()`
+
+This mixin takes a value and a property as in input and gives you a pixel and rem value based on your modular scale. The first value represents from where on your scale you want to pull.
+
+**Input:**
+
+```scss
+$typecsset-base-font-size:      16px;
+$typecsset-base-line-height:    24px;
+$typecsset-auto-scale:          true;
+$typecsset-ratio:               4,3;
+
+[...]
+
+.foo {
+    @include typecsset-scale(1, margin-left);
+}
+```
+
+**Output:**
+
+```css
+.foo {
+    margin-left: 21.3333px;
+    margin-left: 1.3333rem;
+}
+```
+
+As an added bonus, you can go down your scale as well by using negative numbers.
+
+*Note: If font-size is used, line-height will also be included*
