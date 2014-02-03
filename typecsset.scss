@@ -58,6 +58,7 @@ $typecsset-modular-scale:       0;
 
 //Checking for floats in $typecsset-ratio
 @if length($typecsset-ratio) == 2{
+// Making sure we don't have a ratio below 1.
     @if nth($typecsset-ratio,1) < nth($typecsset-ratio,2){
         $typecsset-modular-scale:   nth($typecsset-ratio, 2)/nth($typecsset-ratio, 1);
     }@else{
