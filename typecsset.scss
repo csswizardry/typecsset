@@ -123,7 +123,7 @@ $typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-fo
  *    base font size.
  */
 
-@if $typecsset-show-baseline == true {
+@if $typecsset-show-baseline {
 /**
  * 3. If you have chosen to display a baseline grid, we turn it on here.
  */
@@ -134,13 +134,16 @@ html {
     line-height: $typecsset-base-line-height / $typecsset-base-font-size; /* [2] */
 
     // If you have chosen to display a baseline grid, we turn it on here.
-    @if $typecsset-show-baseline == true {
+    @if $typecsset-show-baseline {
 
+        /* [3] */
+        // Use basehold.it fallback in old browsers
         $typecsset-baseline-size: typecsset-strip-units($typecsset-magic-number);
+        background: url(http://basehold.it/i/#{$typecsset-baseline-size}) 0 0;
 
-        background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] */
+        // Use a linear gradient + background-size in modern browsers
+        background: linear-gradient(to top, rgba(0, 0, 0, .15) 1px, transparent 1px) 0 0 / auto $typecsset-magic-ratio * 1em;
     }
-
 }
 
 body {
